@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from math import floor
-
 """
   type annotation basics
 """
+import math
 
 
 def floor(n: float) -> int:
     """returns the floor of a float"""
-    return floor(n)
+    return math.floor(n)
