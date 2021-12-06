@@ -19,7 +19,7 @@ def measure_time(n: int, max_delay: int):
         max_delay (int): [individual delay time]
 
     Returns:
-        [float]: [total execution time \ n]
+        [float]: [total execution time]
     """
     start = time.perf_counter()
     res = asyncio.run(wait_n(n, max_delay))
