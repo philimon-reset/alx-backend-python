@@ -6,11 +6,11 @@
     """
 import asyncio
 import random
-from typing import List
+from typing import Coroutine
 
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-def task_wait_random(max_delay: int) -> List[float]:
+def task_wait_random(max_delay: int) -> Coroutine:
     """ Returns: _asyncio.Task: _asyncio.Task object"""
     return asyncio.create_task(wait_random(max_delay))
