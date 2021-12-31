@@ -25,4 +25,3 @@ class TestAccessNestedMap(unittest.TestCase):
             expected: int) -> None:
         """ test function """
         self.assertEqual(access_nested_map(nested, path), expected)
-    
