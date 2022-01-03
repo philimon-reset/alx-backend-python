@@ -5,7 +5,7 @@
 import unittest
 from unittest.mock import DEFAULT, MagicMock, PropertyMock, patch
 from typing import Mapping, Sequence
-from client import GithubOrgClient
+from client import GithubOrgClient, get_json
 from parameterized import parameterized, parameterized_class
 
 
@@ -26,4 +26,16 @@ class TestGithubOrgClient(unittest.TestCase):
             access = GithubOrgClient("google-ish")
             test = access._public_repos_url
             m.assert_called_once()
+            self.assertEqual(test, m.return_value["repos_url"])
+
+    @patch("test_client.get_json", return_value={"payload": True})
+    def test_public_repos(self, mock_get_json):
+        """ testing public repos """
+        with patch("test_client.GithubOrgClient._public_repos_url",
+                   new_callable=PropertyMock,
+                   return_value={"repos_url": "google-ish"}) as m:
+            access = GithubOrgClient("google-ish")
+            test = access._public_repos_url
+            m.assert_called_once()
+            mock_get_json.assert_called_once()
             self.assertEqual(test, m.return_value["repos_url"])
