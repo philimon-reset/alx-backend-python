@@ -3,7 +3,7 @@
     """
 
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import DEFAULT, MagicMock, PropertyMock, patch
 from typing import Mapping, Sequence
 from client import GithubOrgClient
 from parameterized import parameterized, parameterized_class
@@ -17,3 +17,13 @@ class TestGithubOrgClient(unittest.TestCase):
         """ function to test GithuborgClient"""
         GithubOrgClient.org(org_T)
         mock.assert_called_once()
+
+    def test_public_repos_url(self):
+        """ testing _public_repos_url method """
+        with patch("test_client.GithubOrgClient.org",
+                   new_callable=PropertyMock,
+                   return_value={"repos_url": "google-ish"}) as m:
+            access = GithubOrgClient("google-ish")
+            test = access._public_repos_url
+            m.assert_called_once()
+            self.assertEqual(test, m.return_value["repos_url"])
