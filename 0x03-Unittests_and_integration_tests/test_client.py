@@ -28,6 +28,7 @@ class TestGithubOrgClient(unittest.TestCase):
             m.assert_called_once()
             self.assertEqual(test, m.return_value["repos_url"])
 
+# what the actual fuck is public repo why did it work
     @patch("test_client.get_json", return_value={"payload": True})
     def test_public_repos(self, mock_get_json):
         """ testing public repos """
@@ -37,3 +38,12 @@ class TestGithubOrgClient(unittest.TestCase):
             access = GithubOrgClient("google-ish")
             test = access._public_repos_url
             m.assert_called_once()
+
+    @parameterized.expand([
+        [{"license": {"key": "my_license"}}, "my_license", True],
+        [{"license": {"key": "other_license"}}, "my_license", False]
+    ])
+    def test_has_license(self, repo, license_key, expected):
+        """ testing has_license """
+        test = GithubOrgClient("Google")
+        self.assertEqual(test.has_license(repo, license_key), expected)
