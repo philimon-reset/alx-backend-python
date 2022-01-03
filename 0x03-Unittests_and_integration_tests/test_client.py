@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-""" Async python first task
-    async_generator that takes no arguments
+"""  write the second unittest for client
     """
 
-import asyncio
-import random
-from typing import Generator
+import unittest
+from unittest.mock import MagicMock, patch
+from typing import Mapping, Sequence
+from client import GithubOrgClient
+from parameterized import parameterized, parameterized_class
 
 
-async def async_generator() -> Generator[float, None, None]:
-    """ Generate a random number after await
-
-    Yields:
-        [int]: [yield a value not stored in memory]
-    """
-    for i in range(10):
-        await asyncio.sleep(1)
-        yield random.uniform(0, 9)
+class TestGithubOrgClient(unittest.TestCase):
+    """ class for githuborgclient class and whole client file """
+    @parameterized.expand([["google"], ["abc"]])
+    @patch.object(GithubOrgClient, "org")
+    def test_org(self, org_T, mock):
+        """ function to test GithuborgClient"""
+        GithubOrgClient.org(org_T)
+        mock.assert_called_once()
