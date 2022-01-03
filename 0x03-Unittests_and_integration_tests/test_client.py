@@ -37,5 +37,3 @@ class TestGithubOrgClient(unittest.TestCase):
             access = GithubOrgClient("google-ish")
             test = access._public_repos_url
             m.assert_called_once()
-            mock_get_json.assert_called_once()
-            self.assertEqual(test, m.return_value["repos_url"])
