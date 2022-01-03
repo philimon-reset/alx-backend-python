@@ -54,3 +54,23 @@ class TestGetJson(unittest.TestCase):
         with patch("test_utils.get_json", return_value=test_payload) as m:
             main_result = get_json(test_url)
         self.assertEqual(main_result["payload"], test_payload["payload"])
+
+
+class TestMemoize(unittest.TestCase):
+    """ Class to create unittest for memoization function """
+    def test_memoize(self):
+        """ Main testing function """
+        class TestClass:
+            def a_method(self):
+                """ testing for memoization function """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ other memoization function """
+                return self.a_method()
+        with patch.object(TestClass, 'a_method', return_value=42) as m:
+            access = TestClass()
+            access.a_property
+            access.a_property
+            m.assert_called_once()
